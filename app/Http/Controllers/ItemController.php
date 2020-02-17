@@ -22,4 +22,9 @@ class ItemController extends Controller
 
     return $newItem;
   }
+  
+  public function getItems(){
+    $allItems = Item::orderBy('id', 'desc')->get();
+    return $allItems;
+  }
 }
