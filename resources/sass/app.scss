@@ -1,8 +1,38 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import '../../node_modules/siimple/dist/siimple.min.css';
 
 // Variables
 @import 'variables';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+.center-h {
+  display: block;
+  margin: auto;
+}
+
+.container {
+  max-width: 1200px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: block;
+  margin: auto;
+}
+
+.form {
+  max-width: 400px;
+  width: 100%;
+}
+
+#request-page {
+  position: relative;
+  min-height: 100vh;
+  .form {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    h1 {
+      font-weight: 100;
+    }
+  }
+}
