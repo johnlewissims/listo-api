@@ -31,9 +31,7 @@ class AuthController extends Controller
     public function login(UserLoginRequest $request) {
       if(!$token = auth()->attempt($request->only(['email', 'password']))) {
         return response()->json([
-          'errors' => [
-            'email' => ['Sorry, we the username or password is incorrect.'],
-          ],
+          'errors' => ['Sorry, the email or password is incorrect.']
         ], 422);
       }
 
@@ -50,5 +48,5 @@ class AuthController extends Controller
 
     public function logout(Request $request){
       auth()->logout();
-    }    
+    }
 }

@@ -24,8 +24,9 @@ class PasswordResetController extends Controller
         $user = User::where('email', $request->email)->first();
         if (!$user)
             return response()->json([
-                'message' => 'We cant find a user with that e-mail address.'
-            ], 404);
+              'error' => true,
+              'message' => 'We cant find a user with that e-mail address.'
+            ]);
         $passwordReset = PasswordReset::updateOrCreate(
             ['email' => $user->email],
             [
@@ -38,7 +39,8 @@ class PasswordResetController extends Controller
                 new PasswordResetRequest($passwordReset->token)
             );
         return response()->json([
-            'message' => 'We have e-mailed your password reset link!'
+          'error' => false,
+          'message' => 'We have e-mailed your password reset link!'
         ]);
     }
     /**
@@ -90,18 +92,23 @@ class PasswordResetController extends Controller
 
         if (!$passwordReset)
             return response()->json([
-                'message' => 'This password reset token is invalid.'
-            ], 404);
+              'error' => true,
+              'message' => 'This password reset token is invalid.'
+            ]);
         $user = User::where('email', $passwordReset->email)->first();
         if (!$user)
             return response()->json([
+                'error' => true,
                 'message' => 'We cant find a user with that e-mail address.'
-            ], 404);
+            ]);
         $user->password = bcrypt($request->password);
         $user->save();
         $passwordReset->delete();
         $user->notify(new PasswordResetSuccess($passwordReset));
-        return response()->json($user);
+        return response()->json([
+            'error' => false,
+            'message' => 'Your password has been reset.'
+        ]);;
     }
 
     /*
@@ -111,5 +118,10 @@ class PasswordResetController extends Controller
     public function request(Request $request)
     {
       return view('reset.request');
+    }
+
+    public function changePassword(Request $request, $token)
+    {
+      return view('reset.change-password')->with(compact('token'));
     }
 }

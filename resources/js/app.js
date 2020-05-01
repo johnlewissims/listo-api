@@ -21,6 +21,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('request-component', require('./components/RequestResetComponent.vue').default);
+Vue.component('change-password-component', require('./components/ChangePasswordComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
